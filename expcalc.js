@@ -41,29 +41,47 @@ var shutter_tick = [ "1000", "500", "250", "125", "64", "32", "16", "8", "4", "1
 var shutter_str = [ "1/1000", "1/500", "1/250", "1/125", "1/64", "1/32", "1/16", "1/8", "1/4", "1/2", "1s", "2s", "4s", "8s", "16s", "30s", "1m", "2m", "4m", "8m", "15m", "30m" ];
 
 
-// build sliders
-
+// shutter slider
 var shutter_axis = d3.svg.axis().ticks(12).tickFormat(function(d) { return shutter_tick[d]; });;
-d3.select('#shutter-slider').call(d3.slider().axis(shutter_axis).min(0).max(shutter.length-1).value(sidx).on("slide", function(evt, value) {
-	let index = Math.round(value);
-	d3.select('#shutter-val').text(shutter_str[index]);
-	sidx = index;
-	calculate('s');
-}));
+var shutter_slider = d3.slider()
+		.axis(shutter_axis)
+		.min(0).max(shutter.length-1)
+		.value(sidx)
+		.on("slide", function(evt, value) {
+			var index = Math.round(value);
+			d3.select('#shutter-val').text(shutter_str[index]);
+			sidx = index;
+			calculate('s');
+		});
+d3.select('#shutter-slider').call(shutter_slider);
 
+// aperture slider
 var aperture_axis = d3.svg.axis().ticks(aperture.length).tickFormat(function(d){ return aperture[d]; });
-d3.select('#aperture-slider').call(d3.slider().axis(aperture_axis).min(0).max(aperture.length-1).snap(true).value(aidx).on("slide", function(evt, value) {
-	d3.select('#aperture-val').text(aperture[value]);
-	aidx = value;
-	calculate('a');
-}));
+var aperture_slider = d3.slider()
+		.axis(aperture_axis)
+		.min(0).max(aperture.length-1)
+		.snap(true)
+		.value(aidx)
+		.on("slide", function(evt, value) {
+			d3.select('#aperture-val').text(aperture[value]);
+			aidx = value;
+			calculate('a');
+		});
+d3.select('#aperture-slider').call(aperture_slider);
 
+// iso slider
 var iso_axis = d3.svg.axis().ticks(iso.length).tickFormat(function(d){ return iso[d]; });
-d3.select('#iso-slider').call(d3.slider().axis(iso_axis).min(0).max(iso.length-1).snap(true).value(iidx).on("slide", function(evt, value) {
-	d3.select('#iso-val').text(iso[value]);
-	iidx = value;
-	calculate('a');
-}));
+var iso_slider = d3.slider()
+		.axis(iso_axis)
+		.min(0).max(iso.length-1)
+		.snap(true)
+		.value(iidx)
+		.on("slide", function(evt, value) {
+			d3.select('#iso-val').text(iso[value]);
+			iidx = value;
+			calculate('a');
+		});
+d3.select('#iso-slider').call(iso_slider);
 
 
 function calculate(control) {
@@ -82,11 +100,10 @@ function calculate(control) {
 		return;
 	}
 
+	var ev_scene = d3.select('#ev-val').text();
+	console.log("EV value of scene: " + ev_scene);
 
-	console.log("Exposure Locked!");
-	return;
-
-	current_ev = calcExposureValue( a, s, i );
+	var current_ev = calcExposureValue( a, s, i );
 	console.log("EV with Settings: " + current_ev);
 	console.log("Settings: ");
 	console.log("A Index: " + aidx);
@@ -95,18 +112,21 @@ function calculate(control) {
 	console.log("S Value: " + s);
 	console.log("I Index: " + iidx);
 	console.log("I Value: " + i);
-	ev_diff = scene_ev - current_ev;
+	var ev_diff = ev_scene - current_ev;
 	console.log("EV Diff between Scene: " + ev_diff);
+
 
 	// adjust!
 
     // what control was used, adjust others
 	if ( control == "a" ) {
-		sidx = sidx + ev_diff;
-		selectBox('shutter', sidx);
+		sidx = sidx - ev_diff;
+		d3.select('#shutter-val').text(shutter_str[sidx]);
+		shutter_slider.value(sidx);
 	} else {
 		aidx = aidx + ev_diff;
-		selectBox('aperture', aidx);
+		d3.select('#aperture-val').text(aperture[aidx]);
+		aperture_slider.value(aidx);
 	}
 
 }
