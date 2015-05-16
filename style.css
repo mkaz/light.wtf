@@ -1,0 +1,126 @@
+/**
+    Exposure Calculator
+    style.css
+*/
+
+@import url("http://fonts.googleapis.com/css?family=Roboto:400,700");
+@import url("http://fonts.googleapis.com/css?family=Arvo:400");
+
+*,
+*:before,
+*:after,
+main {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
+
+html { font-size: 100%; }
+html, button, input, select, textarea { font-family: "Roboto", "Droid Sans", Helvetica, Arial, sans-serif; }
+body, figure, form, fieldset, legend, input, select, textarea, button { margin: 0; }
+
+
+body {
+  font-family: "Roboto", "Droid Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 21px;
+  line-height: 1.3125rem;
+  color: #F0F0F0;
+  background-color: #444;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  height: 100%;
+}
+
+.clear:before,
+.clear:after {
+  content: "";
+  display: table;
+}
+
+.clear:after { clear: both; }
+.clear { zoom: 1; }
+
+
+a, a:visited {
+  text-decoration: none;
+  color: #00D8FF;
+}
+
+header {
+  width: 100%;
+
+  background-color: #303030;
+}
+
+header div.inner {
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 16px 4px;
+}
+
+h1.site-title {
+   font-size: 28px;
+   font-family: Arvo, Georgia, serif;
+   font-weight: 400;
+   color: #00D8FF;
+   margin: 0 0 8px 0;
+   padding: 0;
+}
+
+main {
+  max-width: 375px;
+  margin: 0 auto 32px auto;
+  padding: 4px 8px;
+}
+
+footer {
+  max-width: 375px;
+  font-size: 14px;
+  color: #999;
+  margin: 0 auto;
+  padding: 4px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 32px;
+  width: 100%;
+}
+
+/* App
+================================================== */
+
+.mt20 { padding: 32px 0; }
+.mt10 { margin: 32px 0 16px 0; }
+
+g.tick text {
+    fill: white;
+}
+
+label {
+    font-weight: normal;
+    margin: 12px 0;
+    display: block;
+}
+
+.lock-block {
+    display:inline-block;
+}
+
+#ev-val {
+    width: 3.0rem;
+    display:inline-block;
+    padding-left: 4px;
+}
+
+.val {
+    font-size: 1.6rem;
+    color: yellow;
+}
