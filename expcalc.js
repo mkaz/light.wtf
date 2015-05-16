@@ -117,14 +117,35 @@ function calculate(control) {
 
 
 	// adjust!
+	d3.select('#shutter-overunder').text("");
+	d3.select('#aperture-overunder').text("");
 
     // what control was used, adjust others
 	if ( control == "a" ) {
 		sidx = sidx - ev_diff;
+		if ( sidx < 0 ) {
+			// overexposed (cant get any faster)
+			d3.select('#shutter-overunder').text("+" + Math.abs(sidx));
+			sidx = 0;
+		} else if ( sidx >= shutter.length ) {
+			sidx = shutter.length - 1;
+			// underexposed (cant get any slower)
+			d3.select('#shutter-overunder').text("-");
+		}
 		d3.select('#shutter-val').text(shutter_str[sidx]);
 		shutter_slider.value(sidx);
 	} else {
 		aidx = aidx + ev_diff;
+		if ( aidx < 0 ) {
+			// underexposed (cant make aperture bigger)
+			d3.select('#aperture-overunder').text("-" + Math.abs(aidx))
+			aidx = 0;
+		} else if ( aidx >= aperture.length ) {
+			// overexposed (cant make aperture smaller)
+			var diff = aidx-aperture.length+1;
+			d3.select('#aperture-overunder').text('+' + diff)
+			aidx = aperture.length-1;
+		}
 		d3.select('#aperture-val').text(aperture[aidx]);
 		aperture_slider.value(aidx);
 	}
