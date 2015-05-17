@@ -100,6 +100,11 @@ footer {
 .mt20 { padding: 32px 0; }
 .mt10 { margin: 32px 0 16px 0; }
 
+select#scene {
+	font-size: 1.2rem;
+	width: 100%;
+}
+
 g.tick text {
     fill: white;
 }
