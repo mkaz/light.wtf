@@ -63,8 +63,9 @@ var aperture_slider = d3.slider()
 		.snap(true)
 		.value(aidx)
 		.on("slide", function(evt, value) {
-			d3.select('#aperture-val').text(aperture[value]);
-			aidx = value;
+			var index = Math.round(value);
+			d3.select('#aperture-val').text(aperture[index]);
+			aidx = index;
 			calculate('a');
 		});
 d3.select('#aperture-slider').call(aperture_slider);
@@ -77,8 +78,9 @@ var iso_slider = d3.slider()
 		.snap(true)
 		.value(iidx)
 		.on("slide", function(evt, value) {
-			d3.select('#iso-val').text(iso[value]);
-			iidx = value;
+			var index = Math.round(value);
+			d3.select('#iso-val').text(iso[index]);
+			iidx = index;
 			calculate('a');
 		});
 d3.select('#iso-slider').call(iso_slider);
@@ -94,7 +96,6 @@ function calculate(control) {
     var ev_locked = d3.select('#locked').property('checked');
 
     if (!ev_locked) {
-		console.log("Calculate new EV value");
 		ev = calcExposureValue(a, s, i);
 		d3.select('#ev-val').text(ev);
 		return;
@@ -153,14 +154,11 @@ function calculate(control) {
 }
 
 function sceneChange() {
-	alert("TODO!");
-	return;
-
-    var scene = Number($("#scene").val());
-	console.log("Scene: " + scene);
-    $('#ev').val(scene);
-    $('#locked').prop('checked', true);
-    calculate('a');
+	var sel = document.getElementById('scene');
+	var scene = sel.options[sel.selectedIndex].value;
+	d3.select("#ev-val").text(scene);
+	d3.select('#locked').property('checked', true);
+	calculate('a');
 }
 
 function calcExposureValue(a, s, i) {
