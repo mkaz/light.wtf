@@ -10,8 +10,6 @@
 *:before,
 *:after,
 main {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -56,22 +54,21 @@ a, a:visited {
 
 header {
   width: 100%;
-
   background-color: #303030;
 }
 
 header div.inner {
   max-width: 375px;
   margin: 0 auto;
-  padding: 16px 4px;
+  padding: 12px 4px;
 }
 
 h1.site-title {
-   font-size: 28px;
+   font-size: 24px;
    font-family: Arvo, Georgia, serif;
    font-weight: 400;
    color: #00D8FF;
-   margin: 0 0 8px 0;
+   margin: 0 0 4px 0;
    padding: 0;
 }
 
@@ -83,6 +80,8 @@ main {
 
 footer {
   max-width: 375px;
+  width: 100%;
+  min-width: 320px;
   font-size: 14px;
   color: #999;
   margin: 0 auto;
@@ -92,17 +91,33 @@ footer {
   bottom: 0;
   height: 32px;
   width: 100%;
+  text-align: center;
+  display: flex;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+}
+
+footer span {
+    display: inline-block;
+    margin: 0 4px;
+}
+
+table, tr, td {
+    margin: 0;
+    padding: 0;
 }
 
 /* App
 ================================================== */
 
-.mt20 { padding: 32px 0; }
-.mt10 { margin: 32px 0 16px 0; }
+.mt20 { padding: 24px 0; }
+.mt10 { margin: 16px 0; }
 
 select#scene {
 	font-size: 1.2rem;
 	width: 100%;
+    text-align: left;
 }
 
 g.tick text {

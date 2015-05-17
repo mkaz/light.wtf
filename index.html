@@ -22,28 +22,33 @@
         <main id="main">
             <form onSubmit="return false;">
 
-                <div>
-                    <p>Set EV by Scene: </p>
-                    <select name="scene" id="scene" data-native-menu="true" onChange="sceneChange()">
-                        <option value="16">16: Subject in bright sunlight, sand and snow </option>
-                        <option value="15">15: Subject in bright sunlight</option>
-                        <option value="14">14: Hazy sunshine (soft shadows)</option>
-                        <option value="13">13: Bright cloudy day (no shadows)</option>
-                        <option value="12" selected>12: Overcast Day, Open shade </option>
-                        <option value="11">11: Dawn/Dusk shade </option>
-                        <option value="10">10: Immediate after sunset </option>
-                        <option value="9"> 9: Neon or bright signs (spot lit subject) </option>
-                        <option value="8"> 8: Floodlit stadium (bright day interior) </option>
-                        <option value="7"> 7: Indoor sports / shows, Amusement parks </option>
-                        <option value="6"> 6: Bright night or day interior</option>
-                        <option value="5"> 5: Avg. Home night interior, Night vehicles </option>
-                        <option value="4"> 4: Floodlit buildings, bright streetlights </option>
-                        <option value="3"> 3: Streetlights. Fireworks </option>
-                        <option value="2"> 2: Distant lights</option>
-                        <option value="-2"> -2: Full moon </option>
-                        <option value="-4"> -4: Half moon, Aurora borealis </option>
-                        <option value="-6"> -6: Quarter moon, dark starry night </option>
-                    </select>
+                <div class="mt10">
+                    <table>
+                        <tr><td> Scene: </td>
+                            <td>
+                            <select name="scene" id="scene" data-native-menu="true" onChange="sceneChange()">
+                                <option value="16">16: Subject in bright sunlight, sand and snow </option>
+                                <option value="15">15: Subject in bright sunlight</option>
+                                <option value="14">14: Hazy sunshine (soft shadows)</option>
+                                <option value="13">13: Bright cloudy day (no shadows)</option>
+                                <option value="12" selected>12: Overcast Day, Open shade </option>
+                                <option value="11">11: Dawn/Dusk shade </option>
+                                <option value="10">10: Immediate after sunset </option>
+                                <option value="9"> 9: Neon or bright signs (spot lit subject) </option>
+                                <option value="8"> 8: Floodlit stadium (bright day interior) </option>
+                                <option value="7"> 7: Indoor sports / shows, Amusement parks </option>
+                                <option value="6"> 6: Bright night or day interior</option>
+                                <option value="5"> 5: Avg. Home night interior, Night vehicles </option>
+                                <option value="4"> 4: Floodlit buildings, bright streetlights </option>
+                                <option value="3"> 3: Streetlights. Fireworks </option>
+                                <option value="2"> 2: Distant lights</option>
+                                <option value="-2"> -2: Full moon </option>
+                                <option value="-4"> -4: Half moon, Aurora borealis </option>
+                                <option value="-6"> -6: Quarter moon, dark starry night </option>
+                            </select>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div class="mt10">
@@ -88,7 +93,9 @@
         </main>
 
         <footer>
-			Created by: <a href="https://mkaz.com/" role="author">Marcus Kazmierczak</a>
+			<span> A <a href="https://mkaz.com/" role="author">mkaz</a> project </span>
+            <span> <a href="http://night.exposed/">Night Exposed</a> </span>
+            <span> <a href="http://siliconvalley.town/">Silicon Valley </span>
         </footer>
 
         <script src="d3.v3.min.js" type="text/javascript"></script>
