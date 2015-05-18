@@ -202,26 +202,14 @@ function calculate(control) {
     var ev_locked = Zepto('#locked').attr('checked');
 
     if (!ev_locked) {
-		ev = calcExposureValue(a, s, i);
+		var ev = calcExposureValue(a, s, i);
 		Zepto('#ev-val').text(ev);
 		return;
 	}
 
 	var ev_scene = Number(Zepto("#ev-val").text());
-	console.log("EV value of scene: " + ev_scene);
-
 	var current_ev = calcExposureValue( a, s, i );
-	console.log("EV with Settings: " + current_ev);
-	console.log("Settings: ");
-	console.log("A Index: " + aidx);
-	console.log("A Value: " + a);
-	console.log("S Index: " + sidx);
-	console.log("S Value: " + s);
-	console.log("I Index: " + iidx);
-	console.log("I Value: " + i);
 	var ev_diff = ev_scene - current_ev;
-	console.log("EV Diff between Scene: " + ev_diff);
-
 
 	// adjust!
 	Zepto('#shutter-overunder').text("");
