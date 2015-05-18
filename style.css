@@ -59,7 +59,7 @@ header {
 }
 
 header div.inner {
-  max-width: 375px;
+  max-width: 360px;
   margin: 0 auto;
   padding: 12px 4px;
 }
@@ -74,13 +74,13 @@ h1.site-title {
 }
 
 main {
-  max-width: 375px;
+  max-width: 360px;
   margin: 0 auto 32px auto;
   padding: 4px 8px;
 }
 
 footer {
-  max-width: 375px;
+  max-width: 360px;
   width: 100%;
   min-width: 320px;
   font-size: 13px;
