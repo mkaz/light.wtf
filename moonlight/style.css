@@ -1,0 +1,95 @@
+
+/* style for moonlight exposure calculator */
+body {
+    font-family: sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    line-height: 1.1;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: #00C;
+}
+
+.container,
+header div.inner {
+    max-width: 375px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container {
+    padding: 4px 8px;
+}
+
+header {
+    display: block;
+    padding: 16px;
+    background-color: #262626;
+}
+
+h1.site-title {
+   font-size: 24px; 
+   font-weight: 400;
+   color: white;
+   margin: 0 0 8px 0;
+   padding: 0;
+}
+
+h3.site-description {
+    color: white;
+    font-weight: 300;
+    font-size: 14px;
+    margin: 24px 0 0 0;
+    padding: 0;
+}
+
+
+header div.inner .icon {
+    width: 64px;
+    height: 64px;
+    float: left;
+    background: url('moon-icon.png');
+    margin-right: 16px;
+}
+
+section {
+    display: block;
+    margin-bottom: 32px;
+}
+
+input[type=range] {
+    width: 100%;
+}
+
+div.moon-table {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+}
+
+div.moon-table div:first-child {
+    margin-left: 6px;
+}
+
+#exposure-val {
+    color: #EE4040;
+}
+
+
+footer {
+    max-width: 375px;
+    margin: 92px auto 8px auto; 
+    padding: 32px 4px 8px 4px;
+    border-top: 1px solid #CCC;
+    font-size: 14px;
+}
