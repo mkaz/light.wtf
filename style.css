@@ -4,7 +4,7 @@
 */
 
 @import url("http://fonts.googleapis.com/css?family=Roboto:400,700");
-@import url("http://fonts.googleapis.com/css?family=Arvo:400");
+@import url("http://fonts.googleapis.com/css?family=Exo+2:400");
 
 *,
 *:before,
@@ -31,8 +31,8 @@ body {
   font-size: 1rem;
   line-height: 21px;
   line-height: 1.3125rem;
-  color: #F0F0F0;
-  background-color: #444;
+  color: #E4E4E4;
+  background-color: #242A36;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   height: 100%;
@@ -50,12 +50,12 @@ body {
 
 a, a:visited {
   text-decoration: none;
-  color: #00D8FF;
+  color: #8ABEE5;
 }
 
 header {
   width: 100%;
-  background-color: #303030;
+  background-color: #3B444F;
 }
 
 header div.inner {
@@ -66,11 +66,16 @@ header div.inner {
 
 h1.site-title {
    font-size: 24px;
-   font-family: Arvo, Georgia, serif;
+   font-family: "Exo 2", Georgia, serif;
    font-weight: 400;
-   color: #00D8FF;
+   color: #16C98D;
    margin: 0 0 4px 0;
    padding: 0;
+}
+
+h3.site-description {
+	font-weight: 300;
+	font-size: 14px;
 }
 
 main {
@@ -83,6 +88,7 @@ footer {
   max-width: 360px;
   width: 100%;
   min-width: 320px;
+  height: 32px;
   font-size: 13px;
   color: #999;
   margin: 0 auto;
@@ -90,8 +96,6 @@ footer {
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 32px;
-  width: 100%;
   text-align: center;
   display: flex;
   -webkit-justify-content: space-around;
@@ -114,6 +118,14 @@ table, tr, td {
 
 .mt20 { padding: 24px 0; }
 .mt10 { margin: 16px 0; }
+
+select#iso, 
+select#aperture {
+	font-size: 1.2rem;
+	width: 92px;
+	margin-left: 8px;
+	padding-left: 4px;
+}
 
 select#scene {
 	font-size: 1.2rem;
@@ -143,10 +155,40 @@ label {
 
 .val {
     font-size: 1.6rem;
-    color: yellow;
+    color: #FEEF6D;
 }
 
 .overunder {
     font-size: 1.6rem;
-    color: red;
+    color: #FF708E;
+}
+
+/* Moonlight
+================================================== */
+
+div.moon-table {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+}
+
+div.moon-table div:first-child {
+    margin-left: 6px;
+}
+
+input[type=range] {
+    width: 100%;
+}
+
+.footnote {
+	font-size: 14px;
+	font-weight: 300;
+	margin-top: 48px;
 }

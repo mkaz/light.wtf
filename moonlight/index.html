@@ -1,21 +1,20 @@
 <html>
 <head>
-    <title>Moonlight Exposure Calculator - Night Exposed</title>
+    <title>Moonlight Exposure Calculator - Light WTF!? </title>
     
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
-<body>
+<body class="moonlight">
 
     <header>
         <div class="inner">
-            <div class="icon"></div>
             <h1 class="site-title"> Moonlight Exposure Calculator </h1>
             <h3 class="site-description">
-                A tool to help calculate exposures for night photography
-                with the scene primarily illuminated by just moonlight.
+                Calculate exposures for night photography
+                of a scene primarily illuminated by just moonlight.
             </h3>
         </div>
     </header>
@@ -42,7 +41,7 @@
 
 
         <section class="aperture">
-            <h4> Aperture: <span id="aperture-val"></span></h4>
+            <h4> Aperture: <span id="aperture-val" class="val"></span></h4>
             <div class="slider">
                 <input type="range" id="aperture" list="aperture-list" min=0 max=8 step=1 value=5 onChange="calculate()">
                 <datalist id="aperture-list">
@@ -61,7 +60,7 @@
 
 
         <section class="iso">
-            <h4> ISO: <span id="iso-val"></span></h4>
+            <h4> ISO: <span id="iso-val" class="val"></span></h4>
             <div class="slider">
                 <input type="range" id="iso" list="iso-list" min=0 max=7 step=1 value=2 onChange="calculate()">
                 <datalist id="iso-list">
@@ -77,22 +76,25 @@
             </div>
         </section>
 
-        <section class="result">
+        <section class="result" style="margin-top:16px">
             <h3> Exposure:  
-                <span id="exposure-val"> 0 secs </span> 
+                <span id="exposure-val" class="overunder"> 0 secs </span> 
             </h3>
         </section>
 
     </div>
 
-    <footer>
-    <p>Calculations based off a base exposure of 8min for f/8, ISO 100 and a full moon.
-    <p>See
-        <a href="https://mkaz.com/2004/07/05/exposures-for-moonlight-photography/">Exposures
-            for Moonlight Photography</a> for more details and film reciprocity
-        adjustments, if you're using film and not digital.</p>
+	<div class="footnote">
+		Base exposure of 8 min for f/8, ISO 100 and a full moon.  
+		See <a href="https://mkaz.com/2004/07/05/exposures-for-moonlight-photography/">Exposures
+	for Moonlight Photography</a> for more details and film reciprocity
+		adjustments.
+	</div>
 
-        <p>Created by <a href="https://mkaz.com/">Marcus Kazmierczak</a>.</p>
+    <footer>
+        <span> An <a href="https://mkaz.com/">mkaz</a> riff</span>
+		<span> <a href="/">Exposure Calculator</a> </span>
+		<span> <a href="/pinhole/">Pinhole Exposures</a> </span>
     </footer>
 
     <script type="text/javascript" src="moonlight.js"></script>
