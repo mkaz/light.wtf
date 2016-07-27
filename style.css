@@ -3,8 +3,8 @@
     style.css
 */
 
-@import url("http://fonts.googleapis.com/css?family=Roboto:400,700");
-@import url("http://fonts.googleapis.com/css?family=Exo+2:400");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+@import url("https://fonts.googleapis.com/css?family=Exo+2:400");
 
 *,
 *:before,
@@ -119,7 +119,7 @@ table, tr, td {
 .mt20 { padding: 24px 0; }
 .mt10 { margin: 16px 0; }
 
-select#iso, 
+select#iso,
 select#aperture {
 	font-size: 1.2rem;
 	width: 92px;
