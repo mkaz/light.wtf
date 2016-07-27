@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Published: 2016-07-26
+# Published: 2016-07-27
 #
 /expcalc.js
 /index.html
@@ -12,3 +12,4 @@ CACHE MANIFEST
 /i/aperture-256.png
 /moonlight/index.html
 /pinhole/index.html
+/pinhole/pincalc.js
