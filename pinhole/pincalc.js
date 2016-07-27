@@ -1,100 +1,137 @@
 "use strict";
 // -------------------------------------------------------------------------------------------
-// Exposure Calculator
+// Pinhole Exposure Calculator
 // Marcus Kazmierczak, mkaz.com
 // Published at: http://light.wtf/
 // -------------------------------------------------------------------------------------------
 
 var aperture = [32, 48, 64, 96, 128, 192, 256, 384];
 var iso = [100, 200, 400, 800, 1600, 3200];
+var scene = [
+	[ '16', '16: Subject in bright sunlight, sand and snow' ],
+	[ '15', '15: Subject in bright sunlight' ],
+	[ '14', '14: Hazy sunshine (soft shadows)' ],
+	[ '13', '13: Bright cloudy day (no shadows)' ],
+	[ '12', '12: Overcast Day, Open shade' ],
+	[ '11', '11: Dawn/Dusk shade' ],
+	[ '10', '10: Immediate after sunset' ],
+	[  '9', ' 9: Neon or bright signs (spot lit subject)' ],
+	[  '8', ' 8: Floodlit stadium (bright day interior)' ],
+	[  '7', ' 7: Indoor sports / shows, Amusement parks' ],
+	[  '6', ' 6: Bright night or day interior' ],
+	[  '5', ' 5: Avg. Home night interior, Night vehicles' ],
+	[  '4', ' 4: Floodlit buildings, bright streetlights' ],
+	[  '3', ' 3: Streetlights. Fireworks' ],
+	[  '2', ' 2: Distant lights' ],
+	[ '-2', ' -2: Full moon' ],
+	[ '-4', ' -4: Half moon, Aurora borealis' ],
+	[ '-6', ' -6: Quarter moon, dark starry night' ]
+];
 
-var iidx = 2;
-var aidx = 5;
+var aperture_default_index = 5;
+var iso_default_index = 2;
+var scene_default_index = 4;
 
+var init = function() {
 
-var shutter_str2val = function( str ) {
-	if ( str.indexOf("m") > 0 ) {
-		return Number(str.replace("m", "")) * 60;
-	} else if ( str.indexOf("s") > 0 ) {
-		return Number(str.replace("s", ""));
+	// fill Pinhole options from data
+	var apertureSel = document.getElementById( 'aperture' );
+	for ( let val of aperture ) {
+		var opt = document.createElement( 'option' );
+		opt.appendChild( document.createTextNode( 'f/' + val  ) );
+		opt.value = val;
+		apertureSel.appendChild( opt );
 	}
-	return 1 / str;
-}
+	apertureSel.addEventListener( 'change', calculate );
 
-var shutter_val2str = function ( value ) {
-	if ( value < 1 ) { return 1/value; }
-	if ( value > 59 ) {
-		return value / 60 + "m";
+	// fill ISO options from data
+	var isoSel = document.getElementById( 'iso' );
+	for ( let val of iso ) {
+		var opt = document.createElement( 'option' );
+		opt.appendChild( document.createTextNode( val ));
+		opt.value = val;
+		isoSel.appendChild( opt );
 	}
-	return value + "s";
+	isoSel.addEventListener( 'change', calculate );
+
+	// fill scene options from data
+	var sceneSel = document.getElementById( 'scene' );
+	for ( let row of scene ) {
+		var opt = document.createElement( 'option' );
+		opt.appendChild( document.createTextNode( row[1] ));
+		opt.value = row[0];
+		sceneSel.appendChild( opt );
+	}
+	sceneSel.addEventListener( 'change', calculate );
+
+	// check if previous index in local storage
+	// otherwise set to defaults
+	var aidx = localStorage.getItem('apertureIndex');
+	var iidx = localStorage.getItem('isoIndex');
+	var sidx = localStorage.getItem('sceneIndex');
+
+	apertureSel.selectedIndex = ( aidx ) ? aidx : aperture_default_index;
+	isoSel.selectedIndex = ( iidx ) ? iidx : iso_default_index;
+	sceneSel.selectedIndex = ( sidx ) ? sidx : scene_default_index;
+
+	calculate();
 };
 
+var calculate = function() {
+
+	var apertureSel = document.getElementById( 'aperture' );
+	var isoSel = document.getElementById( 'iso' );
+	var sceneSel = document.getElementById( 'scene' );
+
+	var aidx = apertureSel.selectedIndex;
+	var iidx = isoSel.selectedIndex;
+	var sidx = sceneSel.selectedIndex;
+
+	// store off values to local storage
+	localStorage.setItem('apertureIndex', aidx);
+	localStorage.setItem('isoIndex', iidx);
+	localStorage.setItem('sceneIndex', sidx);
 
 
-function calculate(control) {
+	///////////////////////////////////////
+	// base exposure: f/32 (aperture index = 0 )
+	// film iso: 100 (iso index = 0 )
+	// scene = 0.015625;
+    var base_exposure = 0.015625; // 1/64 seconds
+    var exposure = base_exposure * Math.pow(2, sidx);	// scene
+    exposure = exposure * Math.pow(2, -1 * iidx);	// iso 
+    exposure = exposure * Math.pow(2, aidx);		// aperture
 
-	var a = Zepto("#aperture-val").text();
-	var s = shutter_str2val( Zepto("#shutter-val").text() );
-	var i = Zepto('#iso-val').text();
-
-    // exposure locked
-    var ev_locked = Zepto('#locked').attr('checked');
-
-    if (!ev_locked) {
-		var ev = calcExposureValue(a, s, i);
-		Zepto('#ev-val').text(ev);
-		return;
-	}
-
-	var ev_scene = Number(Zepto("#ev-val").text());
-	var current_ev = calcExposureValue( a, s, i );
-	var ev_diff = ev_scene - current_ev;
-
-	// adjust!
-	Zepto('#shutter-overunder').text("");
-	Zepto('#aperture-overunder').text("");
-
-    // what control was used, adjust others
-	if ( control == "a" ) {
-		sidx = sidx - ev_diff;
-		if ( sidx < 0 ) {
-			// overexposed (cant get any faster)
-			Zepto('#shutter-overunder').text("+" + Math.abs(sidx));
-			sidx = 0;
-		} else if ( sidx >= shutter.length ) {
-			sidx = shutter.length - 1;
-			// underexposed (cant get any slower)
-			Zepto('#shutter-overunder').text("-");
-		}
-		Zepto('#shutter-val').text(shutter_val2str(shutter[sidx]));
-		Zepto('#shutter-slider').val(shutter_val2str(shutter[sidx]));
-	} else {
-		aidx = aidx + ev_diff;
-		if ( aidx < 0 ) {
-			// underexposed (cant make aperture bigger)
-			Zepto('#aperture-overunder').text("-" + Math.abs(aidx))
-			aidx = 0;
-		} else if ( aidx >= aperture.length ) {
-			// overexposed (cant make aperture smaller)
-			var diff = aidx-aperture.length+1;
-			Zepto('#aperture-overunder').text('+' + diff)
-			aidx = aperture.length-1;
-		}
-		Zepto('#aperture-val').text(aperture[aidx]);
-		Zepto('#aperture-slider').val(aperture[aidx]);
-	}
+    document.getElementById('exposure-val').innerHTML = format_exp(exposure);
 
 }
 
-function sceneChange() {
-	var sel = document.getElementById('scene');
-	var scene = sel.options[sel.selectedIndex].value;
-	Zepto("#ev-val").text(scene);
-	Zepto('#locked').attr('checked', true);
-	calculate('a');
+// format secs to better display
+var format_exp = function(secs) {
+    var dexp = "";
+    
+    if (secs > 3599) {        
+        hr = Math.floor(secs / 3600);
+        min = Math.round((secs - hr*3600)/60);
+        dexp = hr + " hrs " + min + " mins";
+    }
+    else if (secs > 60) {
+        min = Math.floor(secs / 60);
+        sec = Math.round(secs - min * 60);
+        dexp = min + " mins " + sec + " secs";
+    }
+    else if (secs < 1) {
+        var val = Math.round(1/secs);
+        if (val == 1) { dexp = " 1 sec "; }
+        else {
+            dexp = "1/" + Math.round(1/secs) + " sec"
+        }
+    }
+    else { dexp = Math.round(secs) + " secs"; }
+    
+    return dexp;
 }
 
-function calcExposureValue(a, s, i) {
-    var ev = Math.log2( Math.pow(a, 2) / s);
-    return Math.round(ev - Math.log2(i / 100));
-}
+// lets do it
+window.onload = init;
+
