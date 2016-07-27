@@ -4,7 +4,7 @@
 */
 
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
-@import url("https://fonts.googleapis.com/css?family=Exo+2:400");
+@import url("https://fonts.googleapis.com/css?family=Exo:400");
 
 *,
 *:before,
@@ -66,7 +66,7 @@ header div.inner {
 
 h1.site-title {
    font-size: 24px;
-   font-family: "Exo 2", Georgia, serif;
+   font-family: "Exo", Georgia, serif;
    font-weight: 400;
    color: #16C98D;
    margin: 0 0 4px 0;
