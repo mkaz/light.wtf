@@ -30,10 +30,11 @@
 
         <header>
             <div class="inner">
+				<img src="/i/lightwtf.svg" width="32" height="32" class="logo" title="light.wtf icon">
                 <h1 class="site-title">
-					<img src="/i/lightwtf.svg" width="32" height="32" class="logo" title="light.wtf icon">
 					Pinhole Exposures
 				</h1>
+				<div class="help" onClick="showOverlay('help')">?</div>
             </div>
         </header>
 
@@ -73,12 +74,65 @@
         </main>
 
         <footer>
-			<span> An <a href="https://mkaz.com/" role="author">mkaz</a> riff </span>
-            <span> <a href="/">Exposure Calculator </a> </span>
-            <span> <a href="/moonlight/">Moonlight Exposures </a> </span>
+			<div id="help-overlay">
+				<h4> Pinhole Exposure Help </h4>
+
+				<ul>
+					<li> Set your aperture, ISO and then use the scene selector to pick the EV of your scene,  how much light is available. 					</li>
+
+					<li> See <span class="link" onClick="showOverlay('ev-help')">Exposure Value Help</span>
+						for more on determining scene light </li>
+
+					<li> Save on your mobile device using "+Add to Homescreen" </li>
+				</ul>
+
+				<div class="more">
+				<h5> Other Calculators: </h5>
+				<ul>
+					<li><a href="/">Exposure Calculator </a> </li>
+					<li><a href="/moonlight/">Moonlight Exposures </a> </li>
+				</ul>
+				</div>
+
+				<div class="credits">
+					An <a href="https://mkaz.com/" role="author">mkaz</a> riff
+				</div>
+			</div>
+			<div id="ev-help-overlay">
+				<h4> Scene Exposure Value Help </h4>
+
+				<p>A table with more info to help determine your scene exposure value </p>
+
+				<table class="ev-table">
+				<tr><td> 16 </td><td> Subject in very bright sunlight, sand or snow </td></tr>
+				<tr><td> 15 </td><td> Subject in bright direct sunlight (Sunny 16 rule) </td></tr>
+				<tr><td> 14 </td><td> Hazy sunshine, slight overcast (soft shadows) </td></tr>
+				<tr><td> 13 </td><td> Bright cloudy day, overcast (no shadows) </td></tr>
+				<tr><td> 12 </td><td> Subject in shade, or overcast day </td></tr>
+				<tr><td> 11 </td><td> Sunsets or subject in deep shade </td></tr>
+				<tr><td> 10 </td><td> Landscape immediate after sunset (or before sunrise)</td></tr>
+				<tr><td>  9 </td><td> Neon or bright signs (spot lit subject) </td></tr>
+				<tr><td>  8 </td><td> Bright day interior, Times Square at night, Stadium lights </td></tr>
+				<tr><td>  7 </td><td> Bright street at night, Indoor sports, Amusement parks </td></tr>
+				<tr><td>  6 </td><td> Day interior without direct sun, bright night </td></tr>
+				<tr><td>  5 </td><td> Night interior with bright lighting, Night vehicles </td></tr>
+				<tr><td>  4 </td><td> Floodlit buildings, bright streetlights, Christmas lights </td></tr>
+				<tr><td>  3 </td><td> Streetlights. Fireworks </td></tr>
+				<tr><td>  2 </td><td> Distant view of lighted buildings </td></tr>
+				<tr><td> -2 </td><td> Scene lit by Full moon </td></tr>
+				<tr><td> -4 </td><td> Half moon, Aurora borealis </td></tr>
+				<tr><td> -6 </td><td> Quarter moon, dark starry night </td></tr>
+				</table>
+
+			</div>
         </footer>
 
-        <script src="../ev-scenes.js" type="text/javascript"></script>
+		<div id="overlay">
+			<div id="innards"></div>
+			<div id="close" onClick="hideOverlay()"> X </div>
+		</div>
+
+        <script src="../common.js" type="text/javascript"></script>
         <script src="./pincalc.js" type="text/javascript"></script>
 
     </body>
