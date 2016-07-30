@@ -134,11 +134,6 @@ table, tr, td {
 .mt20 { padding: 24px 0; }
 .mt10 { margin: 16px 0; }
 
-select {
-	color: #E4E4E4;
-	background-color: #242A36;
-}
-
 select#iso,
 select#aperture {
 	font-size: 1.2rem;
