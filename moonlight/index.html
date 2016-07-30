@@ -25,23 +25,24 @@
         <link rel="apple-touch-icon" href="/i/lightwtf-i-512.png" sizes="512x512">
 		<link rel='mask-icon' href='/i/lightwtf.svg' color='#16C98D'>
 	</head>
-<body class="moonlight">
+	<body class="moonlight">
 
-    <header>
-        <div class="inner">
-            <h1 class="site-title">
+	    <header>
+	        <div class="inner">
 				<img src="/i/lightwtf.svg" width="32" height="32" class="logo" title="light.wtf icon">
-				Moonlight Exposures
-			</h1>
-            <h3 class="site-description">
-                Calculate exposures for night photography
-                of a scene primarily illuminated by just moonlight.
-            </h3>
-        </div>
-    </header>
+	            <h1 class="site-title">
+					Moonlight Exposures
+				</h1>
+				<div class="help" onClick="showOverlay('help')">?</div>
+			<div>
+	            <h3 class="site-description">
+	                Calculate exposures for night photography
+	                of a scene primarily illuminated by just moonlight.
+	            </h3>
+	        </div>
+	    </header>
 
-    <div class="container">
-
+       <main id="main">
         <section class="moonphase">
             <h4> Moon Phase </h4>
             <div class="slider">
@@ -103,20 +104,39 @@
             </h3>
         </section>
 
-    </div>
-
-	<div class="footnote">
-		Base exposure of 8 min for f/8, ISO 100 and a full moon.
-		See <a href="https://mkaz.com/2004/07/05/exposures-for-moonlight-photography/">Exposures
-	for Moonlight Photography</a> for more details and film reciprocity
-		adjustments.
-	</div>
+	</main>
 
     <footer>
-        <span> An <a href="https://mkaz.com/">mkaz</a> riff</span>
-		<span> <a href="/">Exposure Calculator</a> </span>
-		<span> <a href="/pinhole/">Pinhole Exposures</a> </span>
+		<div id="help-overlay">
+			<h4> Moonlight Exposures </h4>
+
+			<ul>
+				<li> Base exposure is 8 min for f/8, ISO 100 and a full moon. See <a href="https://mkaz.com/2004/07/05/exposures-for-moonlight-photography/">Exposures for Moonlight Photography</a> for more details. </li>
+
+				<li> If shooting film, see <a href="https://mkaz.com/film-reciprocity-tables/">reciprocity tables</a> for
+					adjusting your exposure. Film sensitivity drops off the longer the exposure. </li>
+
+				<li> Save on your mobile device using "+Add to Homescreen" </li>
+			</ul>
+
+			<div class="more">
+			<h5> Other Specific Calculators: </h5>
+			<ul>
+				<li><a href="/">Exposure Calculator </a> </li>
+				<li><a href="/pinhole/">Pinhole Exposures </a> </li>
+			</ul>
+			</div>
+
+			<div class="credits">
+				An <a href="https://mkaz.com/" role="author">mkaz</a> riff
+			</div>
+		</div>
     </footer>
+
+	<div id="overlay">
+		<div id="innards"></div>
+		<div id="close" onClick="hideOverlay()"> X </div>
+	</div>
 
     <script type="text/javascript" src="../common.js"></script>
     <script type="text/javascript" src="moonlight.js"></script>
