@@ -1,0 +1,15 @@
+{
+  "name": "light.wtf",
+  "version": "0.3.0",
+  "description": "Exposure Calculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkaz/light.wtf.git"
+  },
+  "author": "Marcus Kazmierczak",
+  "license": "MIT",
+}

@@ -40,12 +40,16 @@ var aidx = 5;
 
 
 var shutter_str2val = function( str ) {
-	if ( str.indexOf("m") > 0 ) {
+	console.log( 'Converting', str );
+	if ( Number.isInteger( str ) ) {
+		return 1 / Number(str);
+	} else if ( str.indexOf("/") > 0 ) {
+		return eval(str);
+	} else if ( str.indexOf("m") > 0 ) {
 		return Number(str.replace("m", "")) * 60;
 	} else if ( str.indexOf("s") > 0 ) {
 		return Number(str.replace("s", ""));
 	}
-	return 1 / str;
 }
 
 var shutter_val2str = function ( value ) {
@@ -56,8 +60,8 @@ var shutter_val2str = function ( value ) {
 	return value + "s";
 };
 
-
-Zepto("#shutter-slider").noUiSlider({
+var shutterSlider = document.getElementById('shutter-slider');
+noUiSlider.create( shutterSlider, {
 	range: {
 		min: 0.001,
 		max: 1800,
@@ -87,28 +91,25 @@ Zepto("#shutter-slider").noUiSlider({
 	format: {
 		to: shutter_val2str,
 	  	from: shutter_str2val
-	}
-
-});
-
-Zepto('#shutter-slider').noUiSlider_pips({
-	mode: 'steps',
-	stepped: true,
-	values: shutter,
-	density: 25,
-	filter: function( val, type ) { // return 0 don't shot, 1 = large, 2 = small
-		if ( shutter_tick.indexOf(val) >= 0 ) { return 1; }
-		else { return 0; }
 	},
-	format: {
-		to: shutter_val2str,
-		from: shutter_str2val
+	pips: {
+		mode: 'steps',
+		density: 25,
+		filter: function( val, type ) { // return 0 don't shot, 1 = large, 2 = small
+			if ( shutter_tick.indexOf(val) >= 0 ) { return 1; }
+			else { return 0; }
+		},
+		format: {
+			to: shutter_val2str,
+			from: shutter_str2val
+		}
 	}
 });
 
 
 // // aperture slider
-Zepto("#aperture-slider").noUiSlider({
+var apertureSlider = document.getElementById('aperture-slider');
+noUiSlider.create( apertureSlider, {
 	range: {
 		min: 1.4,
 		max: 22,
@@ -125,21 +126,22 @@ Zepto("#aperture-slider").noUiSlider({
 	format: {
 		to: function ( value ) { return value; },
 	  from: function ( value ) { return value; }
+	},
+	pips: {
+		mode: 'steps',
+		stepped: true,
+		values: aperture,
+		density: 16,
+		format: wNumb({
+			decimals: 1
+		})
 	}
-});
-Zepto('#aperture-slider').noUiSlider_pips({
-	mode: 'steps',
-	stepped: true,
-	values: aperture,
-	density: 16,
-	format: wNumb({
-		decimals: 1
-	})
 });
 
 
 // iso slider
-Zepto("#iso-slider").noUiSlider({
+var isoSlider = document.getElementById('iso-slider');
+noUiSlider.create( isoSlider, {
 	range: {
 		min: 100,
 		max: 6400,
@@ -154,95 +156,94 @@ Zepto("#iso-slider").noUiSlider({
 	format: {
 	  to: function ( value ) { return value; },
 	  from: function ( value ) { return value; }
+	},
+	pips: {
+		mode: 'steps',
+		stepped: true,
+		values: iso,
+		density: 16,
 	}
 });
 
-Zepto('#iso-slider').noUiSlider_pips({
-	mode: 'steps',
-	stepped: true,
-	values: iso,
-	density: 16,
 
-});
+apertureSlider.noUiSlider.on( 'update', function( values, handle ) {
+	document.getElementById( 'aperture-val' ).innerText = values[handle];
+} );
 
-// Links
-Zepto('#iso-slider').Link('lower').to(Zepto('#iso-val'));
-Zepto('#aperture-slider').Link('lower').to(Zepto('#aperture-val'));
-Zepto('#shutter-slider').Link('lower').to(Zepto('#shutter-val'));
+isoSlider.noUiSlider.on( 'update', function( values, handle ) {
+	document.getElementById( 'iso-val' ).innerText = values[handle];
+} );
 
+shutterSlider.noUiSlider.on( 'update', function( values, handle ) {
+	var value = values[handle];
+	//document.getElementById('shutter-val').innerText = shutter_str2val( value );
+} );
 
 // Events
-Zepto("#shutter-slider").on({
-	slide: function() {
-		calculate('s');
-	}
-});
-
-Zepto("#aperture-slider").on({
-	slide: function() {
-		calculate('a');
-	}
-});
-
-Zepto("#iso-slider").on({
-	slide: function() {
-		calculate('a');
-	}
-});
-
+shutterSlider.noUiSlider.on( 'slide', function() { calculate('s'); } );
+apertureSlider.noUiSlider.on( 'slide', function() { calculate('a'); } );
+isoSlider.noUiSlider.on( 'slide', function() { calculate('a'); } );
 
 
 function calculate(control) {
+	console.log("Calculating...");
+	var evValElem = document.getElementById('ev-val');
 
-	var a = Zepto("#aperture-val").text();
-	var s = shutter_str2val( Zepto("#shutter-val").text() );
-	var i = Zepto('#iso-val').text();
+	var a = document.getElementById('aperture-val').innerText;
+	var s = shutter_str2val( document.getElementById('shutter-val').innerText );
+	var i = document.getElementById('iso-val').innerText;
+
+	console.log( a, s, i );
 
     // exposure locked
-    var ev_locked = Zepto('#locked').attr('checked');
+    var ev_locked = document.getElementById('locked').checked;
 
-    if (!ev_locked) {
+    if ( ! ev_locked ) {
 		var ev = calcExposureValue(a, s, i);
-		Zepto('#ev-val').text(ev);
+		evValElem.innerText = ev;
 		return;
 	}
 
-	var ev_scene = Number(Zepto("#ev-val").text());
+	var ev_scene = Number(evValElem.innerText);
+	console.log( 'EV Scene:', ev_scene);
 	var current_ev = calcExposureValue( a, s, i );
+	console.log("Current EV", current_ev);
 	var ev_diff = ev_scene - current_ev;
+	console.log( 'EV Diff', ev_diff );
 
 	// adjust!
-	Zepto('#shutter-overunder').text("");
-	Zepto('#aperture-overunder').text("");
+	document.getElementById('shutter-overunder').innerText = '';
+	document.getElementById('aperture-overunder').innerText = '';
 
     // what control was used, adjust others
 	if ( control == "a" ) {
 		sidx = sidx - ev_diff;
 		if ( sidx < 0 ) {
 			// overexposed (cant get any faster)
-			Zepto('#shutter-overunder').text("+" + Math.abs(sidx));
+			document.getElementById('shutter-overunder').innerText = "+" + Math.abs(sidx);
 			sidx = 0;
 		} else if ( sidx >= shutter.length ) {
 			sidx = shutter.length - 1;
 			// underexposed (cant get any slower)
-			Zepto('#shutter-overunder').text("-");
+			document.getElementById('shutter-overunder').innerText = "-";
 		}
-		Zepto('#shutter-val').text(shutter_val2str(shutter[sidx]));
-		Zepto('#shutter-slider').val(shutter_val2str(shutter[sidx]));
+		document.getElementById('shutter-val').innerText = shutter_val2str(shutter[sidx]);
+		document.getElementById('shutter-slider').value = shutter_val2str(shutter[sidx]);
 	} else {
+		console.log( 'Aperture Index', aidx)
 		aidx = aidx + ev_diff;
 		if ( aidx < 0 ) {
 			// underexposed (cant make aperture bigger)
-			Zepto('#aperture-overunder').text("-" + Math.abs(aidx))
+			document.getElementById('aperture-overunder').innerText = "-" + Math.abs(aidx);
 			aidx = 0;
 		} else if ( aidx >= aperture.length ) {
 			// overexposed (cant make aperture smaller)
 			var diff = aidx-aperture.length+1;
-			Zepto('#aperture-overunder').text('+' + diff)
+			document.getElementById('aperture-overunder').innerText = '+' + diff;
 			aidx = aperture.length-1;
 		}
-		Zepto('#aperture-val').text(aperture[aidx]);
-		Zepto('#aperture-slider').val(aperture[aidx]);
+		document.getElementById('aperture-val').innerText = aperture[aidx];
+		document.getElementById('aperture-slider').value = aperture[aidx];
 	}
 
 }
@@ -250,8 +251,8 @@ function calculate(control) {
 function sceneChange() {
 	var sel = document.getElementById('scene');
 	var scene = sel.options[sel.selectedIndex].value;
-	Zepto("#ev-val").text(scene);
-	Zepto('#locked').attr('checked', true);
+	document.getElementById('ev-val').innerText = scene;
+	document.getElementById('locked').checked = true;
 	calculate('a');
 }
 
