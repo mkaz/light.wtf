@@ -188,12 +188,14 @@ label {
 	top: 0;
 	left: -3000;
 	width: 100%;
+	max-width: 480px;
 	height: 100%;
 	z-index: 10;
 	background-color: rgba(0,0,0,0.5); /*dim the background*/
 }
 
 #overlay #innards {
+
 	width: 92%;
 	height: 92%;
 	background-color: #3B444F;
