@@ -1,0 +1,20 @@
+var scene = [
+	[ '16', '16: Subject in bright sunlight, sand and snow' ],
+	[ '15', '15: Subject in bright sunlight (Sunny 16 rule)' ],
+	[ '14', '14: Hazy sunshine (soft shadows)' ],
+	[ '13', '13: Bright cloudy day (no shadows)' ],
+	[ '12', '12: Subject in shade, or overcast day' ],
+	[ '11', '11: Sunsets or subject in deep shade' ],
+	[ '10', '10: Immediate after sunset' ],
+	[  '9', ' 9: Neon or bright signs (spot lit subject)' ],
+	[  '8', ' 8: Floodlit stadium (bright day interior)' ],
+	[  '7', ' 7: Indoor sports, shows, Amusement parks' ],
+	[  '6', ' 6: Day interior, bright night' ],
+	[  '5', ' 5: Home night interior, Night vehicles' ],
+	[  '4', ' 4: Floodlit buildings, bright streetlights' ],
+	[  '3', ' 3: Streetlights. Fireworks' ],
+	[  '2', ' 2: Distant lights' ],
+	[ '-2', ' -2: Full moon' ],
+	[ '-4', ' -4: Half moon, Aurora borealis' ],
+	[ '-6', ' -6: Quarter moon, dark starry night' ]
+];
