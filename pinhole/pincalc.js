@@ -1,32 +1,12 @@
 "use strict";
-// -------------------------------------------------------------------------------------------
+// -----------------------------------------------------------
 // Pinhole Exposure Calculator
 // Marcus Kazmierczak, mkaz.com
 // Published at: http://light.wtf/
-// -------------------------------------------------------------------------------------------
+// -----------------------------------------------------------
 
 var aperture = [32, 48, 64, 96, 128, 192, 256, 384];
 var iso = [100, 200, 400, 800, 1600, 3200];
-var scene = [
-	[ '16', '16: Subject in bright sunlight, sand and snow' ],
-	[ '15', '15: Subject in bright sunlight' ],
-	[ '14', '14: Hazy sunshine (soft shadows)' ],
-	[ '13', '13: Bright cloudy day (no shadows)' ],
-	[ '12', '12: Overcast Day, Open shade' ],
-	[ '11', '11: Dawn/Dusk shade' ],
-	[ '10', '10: Immediate after sunset' ],
-	[  '9', ' 9: Neon or bright signs (spot lit subject)' ],
-	[  '8', ' 8: Floodlit stadium (bright day interior)' ],
-	[  '7', ' 7: Indoor sports / shows, Amusement parks' ],
-	[  '6', ' 6: Bright night or day interior' ],
-	[  '5', ' 5: Avg. Home night interior, Night vehicles' ],
-	[  '4', ' 4: Floodlit buildings, bright streetlights' ],
-	[  '3', ' 3: Streetlights. Fireworks' ],
-	[  '2', ' 2: Distant lights' ],
-	[ '-2', ' -2: Full moon' ],
-	[ '-4', ' -4: Half moon, Aurora borealis' ],
-	[ '-6', ' -6: Quarter moon, dark starry night' ]
-];
 
 var aperture_default_index = 5;
 var iso_default_index = 2;
@@ -99,7 +79,7 @@ var calculate = function() {
 	// scene = 0.015625;
     var base_exposure = 0.015625; // 1/64 seconds
     var exposure = base_exposure * Math.pow(2, sidx);	// scene
-    exposure = exposure * Math.pow(2, -1 * iidx);	// iso 
+    exposure = exposure * Math.pow(2, -1 * iidx);	// iso
     exposure = exposure * Math.pow(2, aidx);		// aperture
 
     document.getElementById('exposure-val').innerHTML = format_exp(exposure);
@@ -109,8 +89,8 @@ var calculate = function() {
 // format secs to better display
 var format_exp = function(secs) {
     var dexp = "";
-    
-    if (secs > 3599) {        
+
+    if (secs > 3599) {
         hr = Math.floor(secs / 3600);
         min = Math.round((secs - hr*3600)/60);
         dexp = hr + " hrs " + min + " mins";
@@ -128,7 +108,7 @@ var format_exp = function(secs) {
         }
     }
     else { dexp = Math.round(secs) + " secs"; }
-    
+
     return dexp;
 }
 

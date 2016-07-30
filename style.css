@@ -78,6 +78,11 @@ h3.site-description {
 	font-size: 14px;
 }
 
+.logo {
+	vertical-align:middle;
+	margin-right: 6px;
+}
+
 main {
   max-width: 360px;
   margin: 0 auto 32px auto;
