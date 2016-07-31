@@ -3,8 +3,12 @@
   "version": "0.3.0",
   "description": "Exposure Calculator",
   "scripts": {
-    "build": "browserify ./src/expcalc.js -o ./public/expcalc-bundle.js -t babelify",
-    "watch": "watchify ./src/expcalc.js -o ./public/expcalc-bundle.js -t babelify -v"
+    "expcalc-build": "make expcalc-build",
+    "expcalc-watch": "make expcalc-watch",
+    "pinhole-build": "make pinhole-build",
+    "pinhole-watch": "make pinhole-watch",
+    "moonlight-build": "make moonlight-build",
+    "moonlight-watch": "make moonlight-watch"
   },
   "repository": {
     "type": "git",
