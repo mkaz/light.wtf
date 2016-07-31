@@ -3,7 +3,9 @@
 // format secs to better display
 export const format_exp = function(secs) {
     var dexp = "";
-	var hr, min, sec;
+	var hr = 0,
+		min = 0,
+		sec = 0;
 
     if (secs > 3599) {
         hr = Math.floor(secs / 3600);
@@ -13,7 +15,11 @@ export const format_exp = function(secs) {
     else if (secs > 60) {
         min = Math.floor(secs / 60);
         sec = Math.round(secs - min * 60);
-        dexp = min + " mins " + sec + " secs";
+		if ( sec == 0 ) {
+			dexp = min + " mins ";
+		} else {
+        	dexp = min + " mins " + sec + " secs";
+		}
     }
     else if (secs < 1) {
         var val = Math.round(1/secs);
