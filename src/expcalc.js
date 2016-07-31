@@ -28,9 +28,7 @@ var shutter = [
 	60,
 	120,
 	240,
-	480,
-	900,
-	1800 ];
+	480 ];
 
 var shutter_tick = [ 0.001, 0.004, 0.015625, 0.0625, 0.25, 1, 4, 16, 60, 240, 900];
 var iso = [100, 200, 400, 800, 1600, 3200, 6400];
@@ -44,27 +42,25 @@ var shutterSlider = document.getElementById('shutter-slider');
 noUiSlider.create( shutterSlider, {
 	range: {
 		min: 0.001,
-		max: 1800,
+		max: 480,
 		"5%": 0.002,		// 1/500
-		"10%": 0.004,		// 1/250
-		"15%": 0.008,		// 1/125
-		"20%": 0.015625,	// 1/64
-		"25%": 0.03125,		// 1/32
-		"30%": 0.0625,		// 1/16
-		"35%": 0.125,		// 1/8
-		"40%": 0.25,
-		"45%": 0.5,
-		"50%": 1,
-		"55%": 2,
-		"59%": 4,
-		"64%": 8,
-		"68%": 16,
-		"73%": 30,
-		"77%": 60,
-		"82%": 120,
-		"86%": 240,
-		"91%": 480,
-		"96%": 900,
+		"11%": 0.004,		// 1/250
+		"17%": 0.008,		// 1/125
+		"23%": 0.015625,	// 1/64
+		"29%": 0.03125,		// 1/32
+		"35%": 0.0625,		// 1/16
+		"41%": 0.125,		// 1/8
+		"47%": 0.25,
+		"53%": 0.5,
+		"59%": 1,
+		"64%": 2,
+		"69%": 4,
+		"74%": 8,
+		"79%": 16,
+		"84%": 30,
+		"89%": 60,
+		"93%": 120,
+		"97%": 240,
 	},
 	start: 250,
 	snap: true,
@@ -211,9 +207,10 @@ var calculate = function(control) {
 			shAdjElem.innerText = '+' + Math.abs(sidx);
 			sidx = 0;
 		} else if ( sidx >= shutter.length ) {
+			var diff = sidx - shutter.length + 2;
 			sidx = shutter.length - 1;
 			// underexposed (cant get any slower)
-			shAdjElem.innerText = "-";
+			shAdjElem.innerText = "x" + diff;
 		}
 		svalElem.innerText = shutter_val2str(shutter[sidx]);
 		shutterSlider.noUiSlider.set( shutter_val2str(shutter[sidx]) );
