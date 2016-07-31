@@ -43,7 +43,7 @@ all: expcalc-build pinhole-build moonlight-build
 	@echo "Build Complete"
 
 publish: all
-	rsync -avz --delete --exclude=.git --exclude=Makefile ./public/ oscar:/opt/sites/light.wtf/
+	rsync -avz --delete ./public/ oscar:/opt/sites/light.wtf/
 
 
 
