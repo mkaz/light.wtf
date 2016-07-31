@@ -188,20 +188,21 @@ label {
 	top: 0;
 	left: -3000;
 	width: 100%;
-	max-width: 480px;
+    max-width: 360px;
 	height: 100%;
 	z-index: 10;
-	background-color: rgba(0,0,0,0.5); /*dim the background*/
+	background-color: rgba(0, 0, 0, 0.8); /*dim the background*/
+    margin: 0 auto;
 }
 
 #overlay #innards {
-
 	width: 92%;
 	height: 92%;
 	background-color: #3B444F;
-	margin: 4%;
-	padding: 8px;
+	margin: 4% auto;
+	padding: 16px;
 	overflow: auto;
+    z-index: 16;
 }
 
 #overlay #close {
