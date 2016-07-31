@@ -1,9 +1,11 @@
-"use strict";
 // -------------------------------------------------------------------------------------------
 // Exposure Calculator
 // Marcus Kazmierczak, mkaz.com
 // Published at: http://light.wtf/
 // -------------------------------------------------------------------------------------------
+
+import { shutter_str2val, shutter_val2str } from './shutter-utils';
+import { calculateEV, format_exp, showOverlay, hideOverlay } from './common';
 
 var aperture = [1.4, 2.0, 2.8, 4.0, 5.6, 8.0, 11, 16, 22];
 var shutter = [
@@ -37,25 +39,6 @@ var iso = [100, 200, 400, 800, 1600, 3200, 6400];
 var sidx = 2;
 var iidx = 2;
 var aidx = 5;
-
-
-var shutter_str2val = function( str ) {
-	if ( str.indexOf("m") > 0 ) {
-		return Number(str.replace("m", "")) * 60;
-	} else if ( str.indexOf("s") > 0 ) {
-		return Number(str.replace("s", ""));
-	}
-	return 1 / str;
-}
-
-var shutter_val2str = function ( value ) {
-	if ( value < 1 ) { return 1/value; }
-	if ( value > 59 ) {
-		return value / 60 + "m";
-	}
-	return value + "s";
-};
-
 
 var shutterSlider = document.getElementById('shutter-slider');
 noUiSlider.create( shutterSlider, {
@@ -166,15 +149,15 @@ noUiSlider.create( isoSlider, {
 
 // link slider updates to update value
 isoSlider.noUiSlider.on( 'update', function( values, handle ) {
-	document.getElementById( 'iso-val' ).value = values[handle];
+	document.getElementById( 'iso-val' ).innerText = values[handle];
 });
 
 apertureSlider.noUiSlider.on( 'update', function( values, handle ) {
-	document.getElementById( 'aperture-val' ).value = values[handle];
+	document.getElementById( 'aperture-val' ).innerText = values[handle];
 });
 
 shutterSlider.noUiSlider.on( 'update', function( values, handle ) {
-	document.getElementById( 'shutter-val' ).value = values[handle];
+	document.getElementById( 'shutter-val' ).innerText = values[handle];
 });
 
 // do calculations when slider changes
@@ -182,71 +165,73 @@ isoSlider.noUiSlider.on( 'slide', function() { calculate( 'a' ); } );
 apertureSlider.noUiSlider.on( 'slide', function() { calculate( 'a' ); } );
 shutterSlider.noUiSlider.on( 'slide', function() { calculate( 's' ); } );
 
+// event listener for changing drop down for scene
+document.getElementById( 'scene' ).addEventListener( 'change', function() {
+	var sel = document.getElementById('scene');
+	var scene = sel.options[sel.selectedIndex].value;
+	document.getElementById( 'ev-val' ).innerText = scene;
+	document.getElementById( 'locked' ).checked = true;
+	calculate('a');
+});
 
-function calculate(control) {
 
-	var a = document.getElementById( 'aperture-val' ).innerText;
-	var s = shutter_str2val( document.getElementById( 'shutter-val' ).innerText );
-	var i = document.getElementById( 'iso-val' ).innerText;
+var calculate = function(control) {
+	var avalElem = document.getElementById( 'aperture-val' );
+	var svalElem = document.getElementById( 'shutter-val' );
+	var ivalElem = document.getElementById( 'iso-val' );
 
-    // exposure locked
-    var ev_locked = document.getElementById( 'locked' ).checked;
+	var a = avalElem.innerText;
+	var s = shutter_str2val( svalElem.innerText );
+	var i = ivalElem.innerText;
 
-    if ( ! ev_locked ) {
-		var ev = calcExposureValue(a, s, i);
-		document.getElementById( 'ev-val' ).innerText = ev;
+	var evElem = document.getElementById( 'ev-val' );
+	var shAdjElem = document.getElementById( 'shutter-overunder' );
+	var apAdjElem = document.getElementById( 'aperture-overunder' );
+
+    // check if exposure locked, if not update
+    if ( ! document.getElementById( 'locked' ).checked ) {
+		var ev = calculateEV(a, s, i);
+		evElem.innerText = ev;
 		return;
 	}
 
-	var ev_scene = Number( document.getElementById( 'ev-val' ).innerText );
-	var current_ev = calcExposureValue( a, s, i );
+	var ev_scene = Number( evElem.innerText );
+	var current_ev = calculateEV( a, s, i );
 	var ev_diff = ev_scene - current_ev;
 
-	// adjust!
-	document.getElementById( 'shutter-overunder' ).innerText = '';
-	document.getElementById( 'aperture-overunder' ).innerText = '';
+	// reset the adjust elements
+	shAdjElem.innerText = '';
+	apAdjElem.innerText = '';
 
     // what control was used, adjust others
 	if ( control == "a" ) {
 		sidx = sidx - ev_diff;
 		if ( sidx < 0 ) {
 			// overexposed (cant get any faster)
-			document.getElementById( 'shutter-overunder' ).innerText = '+' + Math.abs(sidx);
+			shAdjElem.innerText = '+' + Math.abs(sidx);
 			sidx = 0;
 		} else if ( sidx >= shutter.length ) {
 			sidx = shutter.length - 1;
 			// underexposed (cant get any slower)
-			document.getElementById( 'shutter-overunder' ).innerText = "-";
+			shAdjElem.innerText = "-";
 		}
-		document.getElementById( 'shutter-val' ).innerText = shutter_val2str(shutter[sidx]);
-		document.getElementById( 'shutter-slider' ).value = shutter_val2str(shutter[sidx]);
+		svalElem.innerText = shutter_val2str(shutter[sidx]);
+		shutterSlider.noUiSlider.set( shutter_val2str(shutter[sidx]) );
 	} else {
 		aidx = aidx + ev_diff;
 		if ( aidx < 0 ) {
 			// underexposed (cant make aperture bigger)
-			document.getElementById( 'aperture-overunder' ).innerText = "-" + Math.abs(aidx);
+			apAdjElem.innerText = "-" + Math.abs(aidx);
 			aidx = 0;
 		} else if ( aidx >= aperture.length ) {
 			// overexposed (cant make aperture smaller)
 			var diff = aidx-aperture.length+1;
-			document.getElementById( 'aperture-overunder' ).innerText = '+' + diff;
+			apAdjElem.innerText = '+' + diff;
 			aidx = aperture.length-1;
 		}
-		document.getElementById( 'aperture-val' ).innerText = aperture[aidx];
-		document.getElementById( 'aperture-slider' ).value = aperture[aidx];
+		avalElem.innerText = aperture[aidx];
+		apertureSlider.noUiSlider.set( aperture[aidx] );
 	}
 
 }
 
-function sceneChange() {
-	var sel = document.getElementById('scene');
-	var scene = sel.options[sel.selectedIndex].value;
-	document.getElementById( 'ev-val' ).innerText = scene;
-	document.getElementById( 'locked' ).checked = true;
-	calculate('a');
-}
-
-function calcExposureValue(a, s, i) {
-    var ev = Math.log2( Math.pow(a, 2) / s);
-    return Math.round(ev - Math.log2(i / 100));
-}

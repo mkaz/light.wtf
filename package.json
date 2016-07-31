@@ -3,8 +3,8 @@
   "version": "0.3.0",
   "description": "Exposure Calculator",
   "scripts": {
-    "build": "browserify ./src/app.js -o ./public/bundle.js -t babelify",
-    "watch": "watchify ./src/app.js -o ./public/bundle.js -t babelify -v"
+    "build": "browserify ./src/expcalc.js -o ./public/expcalc-bundle.js -t babelify",
+    "watch": "watchify ./src/expcalc.js -o ./public/expcalc-bundle.js -t babelify -v"
   },
   "repository": {
     "type": "git",

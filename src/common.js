@@ -1,8 +1,6 @@
 // Javascript shared between calculators
 
-
-
-var showOverlay = function(info) {
+export const showOverlay = function(info) {
 	var el = document.getElementById('overlay');
 	el.style.left = 0;
 	el.style.display = 'block';
@@ -11,7 +9,7 @@ var showOverlay = function(info) {
 	document.getElementById('innards').innerHTML = data.innerHTML;
 }
 
-var hideOverlay = function() {
+export const hideOverlay = function() {
 	var el = document.getElementById('overlay');
 	document.getElementById('innards').innerHTML = '';
 
@@ -19,9 +17,8 @@ var hideOverlay = function() {
 	el.style.display = 'none';
 }
 
-
 // format secs to better display
-var format_exp = function(secs) {
+export const format_exp = function(secs) {
     var dexp = "";
 
     if (secs > 3599) {
@@ -44,4 +41,10 @@ var format_exp = function(secs) {
     else { dexp = Math.round(secs) + " secs"; }
 
     return dexp;
+}
+
+// calculates the exposure value given an aperture, shutter speed and ISO
+export const calculateEV = function(a, s, i) {
+    var ev = Math.log2( Math.pow(a, 2) / s);
+    return Math.round(ev - Math.log2(i / 100));
 }
