@@ -1,0 +1,21 @@
+{
+  "name": "light.wtf",
+  "version": "0.3.0",
+  "description": "Exposure Calculator",
+  "scripts": {
+    "build": "browserify ./src/expcalc.js -o ./public/expcalc-bundle.js -t babelify",
+    "watch": "watchify ./src/expcalc.js -o ./public/expcalc-bundle.js -t babelify -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkaz/light.wtf.git"
+  },
+  "author": "Marcus Kazmierczak",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "watchify": "^3.7.0"
+  }
+}

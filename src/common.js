@@ -1,28 +1,11 @@
 // Javascript shared between calculators
 
-
-
-var showOverlay = function(info) {
-	var el = document.getElementById('overlay');
-	el.style.left = 0;
-	el.style.display = 'block';
-
-	var data = document.getElementById( info + '-overlay' );
-	document.getElementById('innards').innerHTML = data.innerHTML;
-}
-
-var hideOverlay = function() {
-	var el = document.getElementById('overlay');
-	document.getElementById('innards').innerHTML = '';
-
-	el.style.left = -3000;
-	el.style.display = 'none';
-}
-
-
 // format secs to better display
-var format_exp = function(secs) {
+export const format_exp = function(secs) {
     var dexp = "";
+	var hr = 0,
+		min = 0,
+		sec = 0;
 
     if (secs > 3599) {
         hr = Math.floor(secs / 3600);
@@ -32,7 +15,11 @@ var format_exp = function(secs) {
     else if (secs > 60) {
         min = Math.floor(secs / 60);
         sec = Math.round(secs - min * 60);
-        dexp = min + " mins " + sec + " secs";
+		if ( sec == 0 ) {
+			dexp = min + " mins ";
+		} else {
+        	dexp = min + " mins " + sec + " secs";
+		}
     }
     else if (secs < 1) {
         var val = Math.round(1/secs);
@@ -44,4 +31,10 @@ var format_exp = function(secs) {
     else { dexp = Math.round(secs) + " secs"; }
 
     return dexp;
+}
+
+// calculates the exposure value given an aperture, shutter speed and ISO
+export const calculateEV = function(a, s, i) {
+    var ev = Math.log2( Math.pow(a, 2) / s);
+    return Math.round(ev - Math.log2(i / 100));
 }

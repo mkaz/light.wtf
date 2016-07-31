@@ -1,9 +1,10 @@
-"use strict";
 // -----------------------------------------------------------
 // Pinhole Exposure Calculator
 // Marcus Kazmierczak, mkaz.com
-// Published at: http://light.wtf/
+// Published at: https://light.wtf/pinhole/
 // -----------------------------------------------------------
+
+import { format_exp } from './common';
 
 var scene = [
 	[ '16', '16: Subject in bright sunlight, sand or snow' ],
@@ -94,7 +95,6 @@ var calculate = function() {
 	localStorage.setItem('sceneIndex', sidx);
 
 
-	///////////////////////////////////////
 	// base exposure: f/32 (aperture index = 0 )
 	// film iso: 100 (iso index = 0 )
 	// scene = 0.015625;

@@ -47,17 +47,17 @@
             <h4> Moon Phase </h4>
             <div class="slider">
                 <div class="moon-table">
-                    <div><img src="moonnew.gif" onClick="setMoon(0)"></div>
-                    <div><img src="moonxcrt.gif" onClick="setMoon(1)"></div>
-                    <div><img src="moonxqtr.gif" onClick="setMoon(2)"></div>
-                    <div><img src="moonxgib.gif" onClick="setMoon(3)"></div>
-                    <div><img src="moonfull.gif" onClick="setMoon(4)"></div>
-                    <div><img src="moongib.gif" onClick="setMoon(5)"></div>
-                    <div><img src="moonqtr.gif" onClick="setMoon(6)"></div>
-                    <div><img src="mooncrt.gif" onClick="setMoon(7)"></div>
-                    <div><img src="moonnew.gif" onClick="setMoon(8)"></div>
+                    <div><img src="moonnew.gif"  id="moon0"></div>
+                    <div><img src="moonxcrt.gif" id="moon1"></div>
+                    <div><img src="moonxqtr.gif" id="moon2"></div>
+                    <div><img src="moonxgib.gif" id="moon3"></div>
+                    <div><img src="moonfull.gif" id="moon4"></div>
+                    <div><img src="moongib.gif"  id="moon5"></div>
+                    <div><img src="moonqtr.gif"  id="moon6"></div>
+                    <div><img src="mooncrt.gif"  id="moon7"></div>
+                    <div><img src="moonnew.gif"  id="moon8"></div>
                 </div>
-                <input type="range" id="moon" min=0 max=8 step=1 value=4 onChange="calculate()">
+                <input type="range" id="moon" min=0 max=8 step=1 value=4>
             </div>
         </section>
 
@@ -65,7 +65,7 @@
         <section class="aperture">
             <h4> Aperture: <span id="aperture-val" class="val"></span></h4>
             <div class="slider">
-                <input type="range" id="aperture" list="aperture-list" min=0 max=8 step=1 value=5 onChange="calculate()">
+                <input type="range" id="aperture" list="aperture-list" min=0 max=8 step=1 value=5>
                 <datalist id="aperture-list">
                     <option>0</option>
                     <option>1</option>
@@ -84,7 +84,7 @@
         <section class="iso">
             <h4> ISO: <span id="iso-val" class="val"></span></h4>
             <div class="slider">
-                <input type="range" id="iso" list="iso-list" min=0 max=7 step=1 value=2 onChange="calculate()">
+                <input type="range" id="iso" list="iso-list" min=0 max=7 step=1 value=2>
                 <datalist id="iso-list">
                     <option>0</option>
                     <option>1</option>
@@ -138,8 +138,26 @@
 		<div id="close" onClick="hideOverlay()"> X </div>
 	</div>
 
-    <script type="text/javascript" src="../common.js"></script>
-    <script type="text/javascript" src="moonlight.js"></script>
+	<script>
+		var showOverlay = function(info) {
+			var el = document.getElementById('overlay');
+			el.style.left = 0;
+			el.style.display = 'block';
+
+			var data = document.getElementById( info + '-overlay' );
+			document.getElementById('innards').innerHTML = data.innerHTML;
+		};
+
+		var hideOverlay = function() {
+			var el = document.getElementById('overlay');
+			document.getElementById('innards').innerHTML = '';
+
+			el.style.left = -3000;
+			el.style.display = 'none';
+		};
+	</script>
+
+    <script type="text/javascript" src="./moonlight-bundle.js"></script>
 
 </body>
 </html>
