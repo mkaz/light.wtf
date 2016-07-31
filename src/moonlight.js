@@ -1,9 +1,10 @@
-
 // -------------------------------------------------------------------------------------------
 // Moonlight Exposure Calculator
 // Marcus Kazmierczak, mkaz.com
-// Published at: http://night.exposed/moonlight/
+// Published at: https://light.wtf/moonlight/
 // -------------------------------------------------------------------------------------------
+
+import { format_exp } from './common';
 
 // values to display (slider has the stops)
 var aperture = [ 1.4, 2.0, 2.8, 4.0, 5.6, 8, 11, 16, 22 ];

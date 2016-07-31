@@ -1,25 +1,9 @@
 // Javascript shared between calculators
 
-export const showOverlay = function(info) {
-	var el = document.getElementById('overlay');
-	el.style.left = 0;
-	el.style.display = 'block';
-
-	var data = document.getElementById( info + '-overlay' );
-	document.getElementById('innards').innerHTML = data.innerHTML;
-}
-
-export const hideOverlay = function() {
-	var el = document.getElementById('overlay');
-	document.getElementById('innards').innerHTML = '';
-
-	el.style.left = -3000;
-	el.style.display = 'none';
-}
-
 // format secs to better display
 export const format_exp = function(secs) {
     var dexp = "";
+	var hr, min, sec;
 
     if (secs > 3599) {
         hr = Math.floor(secs / 3600);

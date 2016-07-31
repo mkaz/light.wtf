@@ -33,16 +33,14 @@ var shutter = [
 var shutter_tick = [ 0.001, 0.004, 0.015625, 0.0625, 0.25, 1, 4, 16, 60, 240, 900];
 var iso = [100, 200, 400, 800, 1600, 3200, 6400];
 
-
-var sidx = 2;
-var iidx = 2;
-var aidx = 5;
+var sidx = 2;	// default shutter index
+var iidx = 2;	// default iso index
+var aidx = 5;	// default aperture index
 
 var shutterSlider = document.getElementById('shutter-slider');
 noUiSlider.create( shutterSlider, {
 	range: {
 		min: 0.001,
-		max: 480,
 		"5%": 0.002,		// 1/500
 		"11%": 0.004,		// 1/250
 		"17%": 0.008,		// 1/125
@@ -61,6 +59,7 @@ noUiSlider.create( shutterSlider, {
 		"89%": 60,
 		"93%": 120,
 		"97%": 240,
+		max: 480,
 	},
 	start: 250,
 	snap: true,

@@ -82,7 +82,7 @@
                 </div>
 
 
-                <div class="mt20">
+                <div class="mt30">
                     <label for="aperture">
                         Aperture:
                         <span id="aperture-val" class="val">8.0</span>
@@ -92,7 +92,7 @@
                 </div>
 
 
-                <div class="mt20">
+                <div class="mt30">
                     <label for="shutter">
                         Shutter:
                         <span id="shutter-val" class="val">1/250</span>
@@ -172,6 +172,25 @@
         <script src="/a/wNumb.js" type="text/javascript"></script>
         <script src="/a/nouislider.min.js" type="text/javascript"></script>
         <script src="expcalc-bundle.js" type="text/javascript"></script>
+
+		<script>
+			var showOverlay = function(info) {
+				var el = document.getElementById('overlay');
+				el.style.left = 0;
+				el.style.display = 'block';
+
+				var data = document.getElementById( info + '-overlay' );
+				document.getElementById('innards').innerHTML = data.innerHTML;
+			};
+
+			var hideOverlay = function() {
+				var el = document.getElementById('overlay');
+				document.getElementById('innards').innerHTML = '';
+
+				el.style.left = -3000;
+				el.style.display = 'none';
+			};
+		</script>
 
     </body>
 </html>

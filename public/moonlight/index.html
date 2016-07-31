@@ -138,8 +138,26 @@
 		<div id="close" onClick="hideOverlay()"> X </div>
 	</div>
 
-    <script type="text/javascript" src="../common.js"></script>
-    <script type="text/javascript" src="moonlight.js"></script>
+	<script>
+		var showOverlay = function(info) {
+			var el = document.getElementById('overlay');
+			el.style.left = 0;
+			el.style.display = 'block';
+
+			var data = document.getElementById( info + '-overlay' );
+			document.getElementById('innards').innerHTML = data.innerHTML;
+		};
+
+		var hideOverlay = function() {
+			var el = document.getElementById('overlay');
+			document.getElementById('innards').innerHTML = '';
+
+			el.style.left = -3000;
+			el.style.display = 'none';
+		};
+	</script>
+
+    <script type="text/javascript" src="./moonlight-bundle.js"></script>
 
 </body>
 </html>
