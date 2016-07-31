@@ -18,6 +18,7 @@
 .noUi-value {
 	position: absolute;
 	text-align: center;
+	margin-top: 4px;
 }
 .noUi-value-sub {
 	color: #ccc;
