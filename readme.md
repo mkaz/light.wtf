@@ -1,7 +1,7 @@
 
 # Light.WTF
 
-Repository for [Light WTF](https://light.wtf/) a set of mobile apps used to determine the camera exposure in variance situations. Calculators for [General Exposure](https://light.wtf/), [Pinhole Exposures](https://light.wtf/pinhole/), and [Moonlight Exposures](https://light.wtf/moonlight).
+Repository for [Light WTF](https://mkaz.com/light/) a set of mobile apps used to determine the camera exposure in variance situations. Calculators for [General Exposure](https://mkaz.com/light/), [Pinhole Exposures](https://mkaz.com/light/pinhole/), and [Moonlight Exposures](https://mkaz.com/light/moonlight).
 
 Screenshots:
 
